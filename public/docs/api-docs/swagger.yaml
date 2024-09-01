@@ -1,0 +1,1763 @@
+openapi: 3.0.0
+info:
+  title: challange
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: tasks
+  - name: projects
+  - name: User
+paths:
+  /api/tasks/add:
+    post:
+      tags:
+        - tasks
+      summary: Add task
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: integer
+                  example: '1'
+                name:
+                  type: string
+                  example: task 1
+                description:
+                  type: string
+                  example: task 1
+                status:
+                  type: string
+                  example: done
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:10:07 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: success
+                data:
+                  project_id: 16
+                  name: task 1
+                  description: task 1
+                  status: done
+                  updated_at: '2024-09-01T20:10:07.000000Z'
+                  created_at: '2024-09-01T20:10:07.000000Z'
+                  id: 14
+        '401':
+          description: Unauthorized
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:11:05 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Unauthenticated.
+        '422':
+          description: Unprocessable Content
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:08:33 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: selected project id is invalid.
+                  value:
+                    message: The selected project id is invalid.
+                    errors:
+                      project_id:
+                        - The selected project id is invalid.
+                example-1:
+                  summary: project id field is required.
+                  value:
+                    message: The project id field is required.
+                    errors:
+                      project_id:
+                        - The project id field is required.
+  /api/tasks/5:
+    delete:
+      tags:
+        - tasks
+      summary: Delete task
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:12:47 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: success
+        '401':
+          description: Unauthorized
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:13:12 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Unauthenticated.
+        '422':
+          description: Unprocessable Content
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:11:41 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: The selected id is invalid.
+                errors:
+                  id:
+                    - The selected id is invalid.
+  /api/tasks/list/1:
+    get:
+      tags:
+        - tasks
+      summary: List task
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:14:54 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: success
+                data:
+                  - id: 14
+                    project_id: 16
+                    name: task 1
+                    description: task 1
+                    status: done
+                    created_at: '2024-09-01T20:10:07.000000Z'
+                    updated_at: '2024-09-01T20:10:07.000000Z'
+                  - id: 13
+                    project_id: 16
+                    name: '263'
+                    description: '23'
+                    status: done
+                    created_at: '2024-09-01T20:07:12.000000Z'
+                    updated_at: '2024-09-01T20:07:12.000000Z'
+                  - id: 11
+                    project_id: 16
+                    name: adnan1
+                    description: adnan1
+                    status: todo
+                    created_at: '2024-09-01T20:03:49.000000Z'
+                    updated_at: '2024-09-01T20:03:49.000000Z'
+                  - id: 10
+                    project_id: 16
+                    name: task 4444
+                    description: '4444'
+                    status: in-progress
+                    created_at: '2024-09-01T19:24:53.000000Z'
+                    updated_at: '2024-09-01T19:59:04.000000Z'
+                  - id: 4
+                    project_id: 16
+                    name: task 3
+                    description: ''
+                    status: todo
+                    created_at: '2024-09-01T19:20:28.000000Z'
+                    updated_at: '2024-09-01T19:20:28.000000Z'
+                extra_data:
+                  per_page: 25
+                  current_page: 1
+                  last_page: 1
+        '401':
+          description: Unauthorized
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:15:49 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Unauthenticated.
+        '422':
+          description: Unprocessable Content
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:15:20 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: The project id field is required.
+                errors:
+                  project_id:
+                    - The project id field is required.
+  /api/tasks/100:
+    get:
+      tags:
+        - tasks
+      summary: Select task
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:16:22 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: success
+                data:
+                  id: 4
+                  project_id: 16
+                  name: task 3
+                  description: ''
+                  status: todo
+                  created_at: '2024-09-01T19:20:28.000000Z'
+                  updated_at: '2024-09-01T19:20:28.000000Z'
+        '401':
+          description: Unauthorized
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:16:08 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Unauthenticated.
+        '422':
+          description: Unprocessable Content
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:17:02 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: The selected id is invalid.
+                errors:
+                  id:
+                    - The selected id is invalid.
+  /api/tasks/4:
+    put:
+      tags:
+        - tasks
+      summary: Update task
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                project_id:
+                  type: integer
+                  example: '4'
+                name:
+                  type: integer
+                  example: '1'
+                description:
+                  type: integer
+                  example: '1'
+                status:
+                  type: string
+                  example: in-progress
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:18:47 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: success
+                data:
+                  id: 4
+                  project_id: 16
+                  name: '1'
+                  description: '1'
+                  status: in-progress
+                  created_at: '2024-09-01T19:20:28.000000Z'
+                  updated_at: '2024-09-01T20:18:47.000000Z'
+        '401':
+          description: Unauthorized
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:17:35 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Unauthenticated.
+        '422':
+          description: Unprocessable Content
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:19:09 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: The selected id is invalid.
+                errors:
+                  id:
+                    - The selected id is invalid.
+  /api/projects/add:
+    post:
+      tags:
+        - projects
+      summary: Add project
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: adnan1
+                description:
+                  type: string
+                  example: adnan4@gmail.com
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:20:17 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: success
+                data:
+                  name: adnan1
+                  description: adnan4@gmail.com
+                  updated_at: '2024-09-01T20:20:17.000000Z'
+                  created_at: '2024-09-01T20:20:17.000000Z'
+                  id: 17
+        '401':
+          description: Unauthorized
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:19:48 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Unauthenticated.
+        '422':
+          description: Unprocessable Content
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:20:37 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: The name field is required.
+                errors:
+                  name:
+                    - The name field is required.
+  /api/projects/1:
+    delete:
+      tags:
+        - projects
+      summary: Delete project
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:21:53 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: success
+        '401':
+          description: Unauthorized
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:21:29 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Unauthenticated.
+        '422':
+          description: Unprocessable Content
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:21:15 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: The selected id is invalid.
+                errors:
+                  id:
+                    - The selected id is invalid.
+  /api/projects/list/1:
+    get:
+      tags:
+        - projects
+      summary: List project
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:22:22 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: success
+                data:
+                  - id: 16
+                    name: adnan1
+                    description: adnan4@gmail.com
+                    status: active
+                    created_at: '2024-09-01T14:04:12.000000Z'
+                    updated_at: '2024-09-01T14:04:12.000000Z'
+                  - id: 15
+                    name: adnan1
+                    description: adnan4@gmail.com
+                    status: active
+                    created_at: '2024-09-01T13:17:50.000000Z'
+                    updated_at: '2024-09-01T13:17:50.000000Z'
+                  - id: 13
+                    name: adnan122222
+                    description: adnan4@gmail.com
+                    status: active
+                    created_at: '2024-09-01T13:17:12.000000Z'
+                    updated_at: '2024-09-01T15:55:02.000000Z'
+                  - id: 4
+                    name: adnan1111
+                    description: adnan4@gmail.com
+                    status: active
+                    created_at: '2024-09-01T10:57:30.000000Z'
+                    updated_at: '2024-09-01T15:53:24.000000Z'
+                extra_data:
+                  per_page: 25
+                  current_page: 1
+                  last_page: 1
+        '401':
+          description: Unauthorized
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:22:42 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Unauthenticated.
+  /api/projects/2:
+    get:
+      tags:
+        - projects
+      summary: Select project
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:24:00 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: success
+                data:
+                  id: 16
+                  name: adnan1
+                  description: adnan4@gmail.com
+                  status: active
+                  created_at: '2024-09-01T14:04:12.000000Z'
+                  updated_at: '2024-09-01T14:04:12.000000Z'
+        '401':
+          description: Unauthorized
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:23:16 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Unauthenticated.
+        '422':
+          description: Unprocessable Content
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:23:30 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: The selected id is invalid.
+                errors:
+                  id:
+                    - The selected id is invalid.
+  /api/projects/16:
+    put:
+      tags:
+        - projects
+      summary: Update project
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                name:
+                  type: string
+                  example: pro 1
+                status:
+                  type: string
+                  example: inactive
+                description:
+                  type: string
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:25:21 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                success: true
+                message: success
+                data:
+                  id: 16
+                  name: pro 1
+                  description: null
+                  status: inactive
+                  created_at: '2024-09-01T14:04:12.000000Z'
+                  updated_at: '2024-09-01T20:25:21.000000Z'
+        '401':
+          description: Unauthorized
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:24:28 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Unauthenticated.
+        '422':
+          description: Unprocessable Content
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:24:55 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: The selected id is invalid.
+                errors:
+                  id:
+                    - The selected id is invalid.
+  /api/login:
+    post:
+      tags:
+        - User
+      summary: User Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: ammar@gmail.com
+                password: Ammar001
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:08:16 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                token: 4|uwhZyNE9Mlywymf071jiCOqB1UfWpQdkt5pm5lJu6b2c72ad
+        '401':
+          description: Unauthorized
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:25:55 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: Unauthorized
+  /api/register:
+    post:
+      tags:
+        - User
+      summary: User LogOut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: ammar@gmail.com
+                password: Ammar001
+                name: ammar
+                password_confirmation: Ammar001
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:31:12 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Logged out successfully
+        '401':
+          description: Unauthorized
+          headers:
+            Server:
+              schema:
+                type: string
+                example: nginx/1.27.1
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Transfer-Encoding:
+              schema:
+                type: string
+                example: chunked
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Powered-By:
+              schema:
+                type: string
+                example: PHP/8.2.23
+            Cache-Control:
+              schema:
+                type: string
+                example: no-cache, private
+            Date:
+              schema:
+                type: string
+                example: Sun, 01 Sep 2024 20:30:16 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: Unauthenticated.
