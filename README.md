@@ -1,66 +1,101 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# TaskFlowPro
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+TaskFlowPro is a project management tool built with Laravel, Docker, MySQL, and Blade with TailwindCSS. It provides functionalities to manage projects and tasks, and includes API endpoints documented with Swagger. Postman collection files are also included for testing.
 
-## About Laravel
+## Features
+- Dockerized environment with Laravel and MySQL
+- TailwindCSS for styling
+- Blade templates for frontend views
+- RESTful API for managing projects and tasks
+- Swagger API documentation
+- Postman collection for easy API testing
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Overview of the project.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+#### 1 The project involves user management with functionality for login, registration, updates, and deletion of user. The dashboard page displays a list of tasks in a table format, with options to list, delete, and edit tasks. There is also a button to add new projects.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### 2 When you click on "List Tasks," you are redirected to the tasks/list page, where you can view a table of tasks related to each project. On this page, you can delete or edit individual tasks and add new tasks to the respective projects.
 
-## Learning Laravel
+#### 3 The entire application is designed to be responsive, ensuring a seamless experience across different devices.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Setup
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Prerequisites
+Ensure you have the following installed on your local machine:
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Node.js](https://nodejs.org/en/download/) and npm
+- [Composer](https://getcomposer.org/download/)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Clone the Repository
 
-## Laravel Sponsors
+git clone https://github.com/adtasdemir/taskFloPro.git
+cd taskFloPro
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2. Environment Configuration
+cp .env.example .env
+Update the following values in the .env file:
 
-### Premium Partners
+DB_DATABASE=flowTask
+DB_USERNAME=root
+DB_PASSWORD=root
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 3. Install Dependencies
+Install PHP dependencies using Composer:
 
-## Contributing
+composer install
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Install JavaScript dependencies using npm:
 
-## Code of Conduct
+npm install
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4. Build Frontend Assets
+Using Vite, build or serve your frontend assets:
 
-## Security Vulnerabilities
+npm run dev  # for development
+npm run build  # for production
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 5 Set Up Docker Containers
+Start the Docker containers (Laravel, MySQL, Nginx):
 
-## License
+docker-compose up -d
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 6. Run Migrations
+Run the database migrations to create the necessary tables:
+
+docker exec -it app-container-name php artisan migrate
+
+### 7. Access the Application
+Once everything is set up, you can access the application at:
+
+Frontend: http://localhost/
+API Documentation (Swagger): http://localhost/api/documentation
+
+### 8. Testing with Postman
+To test the API endpoints, you can import the Postman  [collection](https://github.com/adtasdemir/taskFloPro/blob/main/postman_collection.json) provided in the repository.
+
+
+
+## Explanation of the design pattern 
+
+### 1 The code implements the Repository Pattern, the Service Pattern.
+#### 1 Repository Pattern:
+The BaseRepository, TasksRepository and ProjectsRepository  classes encapsulate the data access logic. The repositories provide an abstraction layer between the application and the database, making it easier to manage and test the data interactions. This pattern is used to handle all database operations in a structured and reusable way, allowing the service layer to focus on business logic rather than direct database access.
+
+#### 2 Service Pattern:
+The BaseService, ProjectsService and TasksService class handles the business logic of the application. It calls the repository to fetch or modify data and processes it as required. The service layer typically orchestrates multiple repositories or performs additional operations, ensuring separation of concerns between business logic and data access. This pattern ensures that business rules are applied consistently and provides a place for logic that doesn't belong in the repository.
+
+
+### 2 Response Classes and Request Classes
+
+I used Response Classes and Request Classes to align with clean architecture principles and best practices by ensuring separation of concerns.
+
+#### 1 Request Classes:
+These classes handle the validation and sanitization of incoming requests. By using them, you ensure that the data entering your application is clean and validated at the entry point.
+Laravel's FormRequest is a great tool for centralizing validation logic, making your controllers cleaner and more focused on application flow.
+
+#### 2 Response Classes:
+These classes help format responses consistently across the application. Instead of directly returning arrays or JSON, you use a response helper that formats data, sets status codes, and manages additional metadata like pagination.
+This practice enhances reusability and ensures standardized API responses throughout the application.
+
+
