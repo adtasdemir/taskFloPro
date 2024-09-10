@@ -21,11 +21,11 @@ class DeleteProject extends FormRequest
         ];
     }
 
-    public function all($keys = null): array
+    protected function prepareForValidation()
     {
-        $data = parent::all($keys);
-        $data['id'] = $this->route('id');
-
-        return $data;
+        $this->merge([
+            'id' => $this->route('id'),
+        ]);
     }
+
 }

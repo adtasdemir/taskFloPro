@@ -19,53 +19,123 @@ class TasksController extends Controller
      * @var array
      */
 
+    /**
+     * TasksController constructor.
+     * 
+     * @param TasksServieContract $service
+     */
     public function __construct(TasksServieContract $service)
     {
         $this->service = $service;
     }
 
+    
     /**
+     * Create a new task
+     * 
+     * @param CreateTask $request
+     * 
      * @return array
      */
     public function createTask(CreateTask $request): array
     {
-        return $this->service->createTask($request);
+        try{
+            $response = $this->service->createTask($request->all());
+            return ResponseHelper::response(true, 'success', $response);
+        }catch(Exception $e){
+            return ResponseHelper::response(false, $e->getMessage());
+        }
     }
 
    
+    /**
+     * Delete task
+     * 
+     * @param DeleteTask $request
+     * 
+     * @return array
+     */
     public function deleteTask(DeleteTask $request): array
     {
-        return $this->service->deleteTask($request);
-
+        try{
+            $response = $this->service->deleteTask($request->all());
+            return ResponseHelper::response(true, 'success', $response);
+        }catch(Exception $e){
+            return ResponseHelper::response(false, $e->getMessage());
+        }
     }
 
+    /**
+     * List tasks
+     * 
+     * @param ListTasks $request
+     * 
+     * @return array
+     */
      public function listTasks(ListTasks $request): array
     {
-        return $this->service->listTasks($request);
+        try{
+            $response = $this->service->listTasks($request->all());
+            return ResponseHelper::response(true, 'success', $response);
+        }catch(Exception $e){
+            return ResponseHelper::response(false, $e->getMessage());
+        }
     }
 
     
     public function selectTask(SelectTask $request): array
     {
-        return $this->service->selectTask($request);
+        try{
+            $response = $this->service->selectTask($request->all());
+            return ResponseHelper::response(true, 'success', $response);
+        }catch(Exception $e){
+            return ResponseHelper::response(false, $e->getMessage());
+        }
     }
 
+    /**
+     * Update task
+     * 
+     * @param UpdateTask $request
+     * 
+     * @return array
+     */
     public function updateTask(UpdateTask $request): array
     {
-        return $this->service->updateTask($request);
+        try{
+            $response = $this->service->updateTask($request->all());
+            return ResponseHelper::response(true, 'success', $response);
+        }catch(Exception $e){
+            return ResponseHelper::response(false, $e->getMessage());
+        }
     }
 
+
+
+
+    /**
+     * List tasks for web
+     * 
+     * @param ListTasks $request
+     * 
+     * @return array
+     */
     public function listTasksWeb(ListTasks $request)
     {
-        $response = $this->service->listTasks($request);
-        return view('tasks', [
-            'tasks' => $response['data'],
-            'pagination' => $response['extra_data'] ?? [],
-            'project_id' => $request['project_id'] ?? []
-        ]);
+        try{
+            $response = $this->service->listTasks($request->all());
+            return view('tasks', ['tasks' => $response, 'project_id' => $request->project_id ]);
+        }catch(Exception $e){
+            return view('error', ['exception' => $e->getMessage() ]);
+        }
     }
     
 
+    /**
+     * Get all task statuses
+     * 
+     * @return array
+     */
     public function getStatuses()
     {
         try{

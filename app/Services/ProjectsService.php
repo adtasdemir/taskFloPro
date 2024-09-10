@@ -2,99 +2,96 @@
 
 namespace App\Services;
 
-use Exception;
 use App\Services\BaseService;
-use App\Helpers\ResponseHelper;
 use App\Repositories\ProjectsRepository;
-use App\Http\Requests\Projects\ListProjects;
-use App\Http\Requests\Projects\CreateProject;
-use App\Http\Requests\Projects\DeleteProject;
-use App\Http\Requests\Projects\SelectProject;
-use App\Http\Requests\Projects\UpdateProject;
 use App\Contracts\Service\ProjectsServiceContract;
+use App\Models\Project;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 
 class ProjectsService extends BaseService implements ProjectsServiceContract
 {
+    /**
+     * ProjectsService constructor.
+     *
+     * @param ProjectsRepository $repository
+     */
     public function __construct(ProjectsRepository $repository)
     {
         parent::__construct($repository);
     }
 
-    public function createProject(CreateProject $request): array
-    {    
-        try{
-            $response = $this->repository->createProject(
-                $request->name,
-                $request->description,
-            );
 
-            return ResponseHelper::response(true, 'success', $response);
-        }catch(Exception $e){
-            return ResponseHelper::response(false, $e->getMessage());
-        }
+    /**
+     * Create a new project
+     *
+     * @param array $request
+     * 
+     * @return Project
+     */
+    public function createProject(array $request): Project
+    {    
+        return $this->repository->createProject(
+            $request['name'],
+            $request['description'],
+        );
     }
 
-    public function deleteProject(DeleteProject $request): array
+    /**
+     * Delete a project
+     *
+     * @param array $request
+     * 
+     * @return bool
+     */
+    public function deleteProject(array $request): bool
     {    
-        try{
-            $response = $this->repository->deleteProject(
-                $request->id
-            );
-
-            return ResponseHelper::response($response, $response ? 'success' : 'failed');
-        }catch(Exception $e){
-            return ResponseHelper::response(false, $e->getMessage());
-        }
+        return $this->repository->deleteProject(
+            $request['id']
+        );
     }
 
-    public function listProjects(ListProjects $request): array
+    /**
+     * List all projects, with pagination.
+     *
+     * @param array $request
+     * 
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function listProjects(array $request): LengthAwarePaginator
     {    
-        try{
-            $response = $this->repository->ListProjects(
-                $request->page,
-                $request->per_page,
-            );
-
-            $extraData = [
-                'per_page' => $response->perPage(),   
-                'current_page' => $response->currentPage(),  
-                'last_page' => $response->lastPage()
-            ];
-
-            return ResponseHelper::response(true, 'success', $response->items(), $extraData);
-        }catch(Exception $e){
-            return ResponseHelper::response(false, $e->getMessage());
-        }
+        return  $this->repository->ListProjects();
     }
 
-    public function selectProject(SelectProject $request): array
+    /**
+     * Select a project by id
+     *
+     * @param array $request
+     *
+     * @return Project
+     */
+    public function selectProject(array $request): Project
     {
-        try{
-            $response = $this->repository->selectProject(
-                $request->id
-            );
-
-            return ResponseHelper::response(true, 'success', $response);
-        }catch(Exception $e){
-            return ResponseHelper::response(false, $e->getMessage());
-        }
+        return $this->repository->selectProject(
+            $request['id']
+        );
     }
 
-    public function updateProject(UpdateProject $request): array
+    /**
+     * Update a project
+     *
+     * @param array $request
+     *
+     * @return Project
+     */
+    public function updateProject(array $request): Project
     {
-          try{
-            $response = $this->repository->updateProject(
-                $request->id,
-                $request->status,
-                $request->description,
-                $request->name,
-            );
-
-            return ResponseHelper::response(true, 'success', $response);
-        }catch(Exception $e){
-            return ResponseHelper::response(false, $e->getMessage());
-        }
+        return $this->repository->updateProject(
+            $request['id'],
+            $request['status'],
+            $request['description'],
+            $request['name'],
+        );
     }
 }
 

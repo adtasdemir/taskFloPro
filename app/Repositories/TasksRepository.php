@@ -2,8 +2,9 @@
 
 namespace App\Repositories;
 
-use App\Contracts\Repository\TasksRepositoryContract;
 use App\Models\Task;
+use App\Contracts\Repository\TasksRepositoryContract;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class TasksRepository extends BaseRepository implements TasksRepositoryContract
 {
@@ -12,46 +13,80 @@ class TasksRepository extends BaseRepository implements TasksRepositoryContract
         parent::__construct($model);
     }
 
-    public function createTask(int $project_id, string $name, ?string $description, ?string $status)
+    /**
+     * Create a new task
+     *
+     * @param int $project_id
+     * @param string $name
+     * @param string|null $description
+     * @param string|null $status
+     *
+     * @return \App\Models\Task
+     */
+    public function createTask(int $project_id, string $name, ?string $description, ?string $status): Task
     {
-        $Task = new Task();
-        $Task->project_id = $project_id;
-        $Task->name = $name;
-        $Task->description = $description ?? "";
+        $data = [
+            'project_id' => $project_id,
+            'name' => $name,
+            'description' => $description ?? ""
+        ];
         if(!empty($status)){
-            $Task->status = $status;
+            $data['status'] = $status;
         }
-        $Task->save();
-
-        return $Task;
+        return $this->create($data);
     }
 
 
-    public function deleteTask(int $id)
+    /**
+     * Delete a task
+     *
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function deleteTask(int $id): bool
     {
-        $task = Task::find($id);
-        if ($task) {
-            $task->delete();
-            return true;
-        }
-
-        return false;
+        return $this->query()->find($id)->delete();
     }
 
-    public function listTasks(int $project_id, int $page, int $perPage){
-        return Task::orderBy('id', 'desc')
-            ->where('project_id', $project_id)
-            ->paginate($perPage, ['*'], 'page', $page);
-    }
-
-    public function selectTask(int $id)
+    /**
+     * List tasks
+     * 
+     * @param int $project_id
+     * 
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function listTasks(int $project_id): LengthAwarePaginator
     {
-        return Task::find($id); 
+        return $this->query()->where('project_id', $project_id)->paginate();
+    }
+
+    /**
+     * Select a task by id
+     * 
+     * @param int $id
+     * 
+     * @return \App\Models\Task
+     */
+    public function selectTask(int $id): Task
+    {
+        return $this->query()->find($id); 
     }
     
-    public function updateTask(int $id, ?string $status, ?string $description, ?string  $name, ?int $project_id)
+    /**
+     * Update a task
+     * 
+     * @param int $id
+     * @param string|null $status
+     * @param string|null $description
+     * @param string|null $name
+     * @param int|null $project_id
+     * 
+     * @return \App\Models\Task
+     */
+    public function updateTask(int $id, ?string $status, ?string $description, ?string  $name)
     {
-        $Task = Task::find($id);
+        $Task = $this->query()->find($id);
 
         if (!$Task) {
             return null; 
@@ -67,10 +102,6 @@ class TasksRepository extends BaseRepository implements TasksRepositoryContract
 
         if(!empty($name)){
             $Task->name = $name;
-        }
-
-        if(!empty($project_id)){
-            $Task->project_id = $project_id;
         }
 
         $Task->save();

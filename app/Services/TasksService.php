@@ -2,102 +2,98 @@
 
 namespace App\Services;
 
-use Exception;
+use App\Models\Task;
 use App\Services\BaseService;
-use App\Helpers\ResponseHelper;
-use App\Http\Requests\Tasks\ListTasks;
 use App\Repositories\TasksRepository;
-use App\Http\Requests\Tasks\CreateTask;
-use App\Http\Requests\Tasks\DeleteTask;
-use App\Http\Requests\Tasks\SelectTask;
-use App\Http\Requests\Tasks\UpdateTask;
 use App\Contracts\Service\TasksServieContract;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class TasksService extends BaseService implements TasksServieContract
 {
+    /**
+     * TasksService constructor.
+     *
+     * @param TasksRepository $repository
+     */
     public function __construct(TasksRepository $repository)
     {
         parent::__construct($repository);
     }
 
-    public function createTask(CreateTask $request): array
+    /**
+     * Create a new task
+     *
+     * @param array $request
+     * 
+     * @return \App\Models\Task
+     */
+    public function createTask(array $request): Task
     {    
-        try{
-            $response = $this->repository->createTask(
-                $request->project_id,
-                $request->name,
-                $request->description ?? "",
-                $request->status ?? "",
-            );
-
-            return ResponseHelper::response(true, 'success', $response);
-        }catch(Exception $e){
-            return ResponseHelper::response(false, $e->getMessage());
-        }
+        return $this->repository->createTask(
+            $request['project_id'],
+            $request['name'],
+            $request['description'] ?? "",
+            $request['status'] ?? "",
+        );
     }
 
-    public function deleteTask(DeleteTask $request): array
+    /**
+     * Delete task
+     * 
+     * @param array $request
+     * 
+     * @return bool
+     */
+    public function deleteTask(array $request): bool
     {    
-        try{
-            $response = $this->repository->deleteTask(
-                $request->id
-            );
-
-            return ResponseHelper::response($response, $response ? 'success' : 'failed');
-        }catch(Exception $e){
-            return ResponseHelper::response(false, $e->getMessage());
-        }
+        return $this->repository->deleteTask(
+            $request['id']
+        );
     }
 
-    public function listTasks(ListTasks $request): array
+    /**
+     * List tasks
+     * 
+     * @param array $request
+     * 
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function listTasks(array $request): LengthAwarePaginator
     {    
-        try{
-            $response = $this->repository->listTasks(
-                $request->project_id,
-                $request->page,
-                $request->per_page,
-            );
-
-            $extraData = [
-                'per_page' => $response->perPage(),   
-                'current_page' => $response->currentPage(),  
-                'last_page' => $response->lastPage()
-            ];
-
-            return ResponseHelper::response(true, 'success', $response->items(), $extraData);
-        }catch(Exception $e){
-            return ResponseHelper::response(false, $e->getMessage());
-        }
+        return $this->repository->listTasks(
+            $request['project_id'],
+        );
     }
 
-    public function selectTask(SelectTask $request): array
+    /**
+     * Select a task by id
+     * 
+     * @param array $request
+     * 
+     * @return \App\Models\Task
+     */
+    public function selectTask(array $request): Task
     {
-        try{
-            $response = $this->repository->selectTask(
-                $request->id
-            );
-
-            return ResponseHelper::response(true, 'success', $response);
-        }catch(Exception $e){
-            return ResponseHelper::response(false, $e->getMessage());
-        }
+        return $this->repository->selectTask(
+            $request['id']
+        );
     }
 
-    public function updateTask(UpdateTask $request): array
+    /**
+     * Update a task
+     * 
+     * @param array $request
+     * 
+     * @return \App\Models\Task
+     */
+    public function updateTask(array $request): Task
     {
-          try{
-            $response = $this->repository->updateTask(
-                $request->id,
-                $request->status,
-                $request->description,
-                $request->name,
-                $request->project_id
-            );
-
-            return ResponseHelper::response(true, 'success', $response);
-        }catch(Exception $e){
-            return ResponseHelper::response(false, $e->getMessage());
-        }
+        return $this->repository->updateTask(
+            $request['id'],
+            $request['status'],
+            $request['description'],
+            $request['name'],
+        );
     }
 }
 

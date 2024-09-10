@@ -43,7 +43,7 @@
 
 function openEditModal(projectID) {
      $('#projectStatus-edit').empty();
-    $.ajax({
+     $.ajax({
         url: '/projects/statuses',
         method: 'GET',
         success: function(data) {

@@ -21,26 +21,14 @@ class ListTasks extends FormRequest
     {
         return [
             'project_id' => ['required', 'integer', 'min:0', 'exists:projects,id'],
-            'per_page' => ['nullable', 'integer', 'min:1', 'max:' . self::MAX_LIMIT_OF_PER_PAGE],
-            'page' => ['nullable', 'integer', 'min:0'],
         ];
     }
 
     protected function prepareForValidation()
     {
         $this->merge([
-            'per_page' => $this->input('per_page') ?? self::PER_PAGE,
-            'page' => $this->input('page') ?? 1,
+            'id' => $this->route('id'),
         ]);
-    }
-
-    public function all($keys = null): array
-    {
-        $data = parent::all($keys);
-        if(empty($data['page'])){
-            $data['page'] = $this->route('page') ?? "";
-        }
-        return $data;
     }
 
 }
